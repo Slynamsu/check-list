@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #476e4b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .checklist {
+        max-width: 400px;
+        background: #c6c6e4;
+        border-radius: 5px;
+        box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #080000;
+      }
+
+      .item:last-child {
+        border-bottom: 0;
+      }
+
+      input:checked + p {
+        background: #c6c6e4;
+        text-decoration: line-through;
+      }
+
+      input[type="checkbox"] {
+        margin: 20px;
+      }
+
+      p {
+        margin: 0;
+        padding: 20px;
+        transition: background 0.2s;
+        flex: 1;
+        font-family: "helvetica neue";
+        font-size: 20px;
+        font-weight: 200;
+        border-left: 1px solid #070000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <input type="checkbox" id="checkAll" />
+      <label for="checkAll">Check All</label>
+      <input type="checkbox" id="uncheckAll" />
+      <label for="uncheckAll">Uncheck All</label>
+    </div>
+
+    <div class="checklist">
+      <div class="item">
+        <input type="checkbox" />
+        <p>Buy groceries</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Follow up with pending tasks</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Jog for 30 minutes</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Rearrange furniture in the living room</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Organize files and documents</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Plant flowers in the garden</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Hiking trip</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Send email to clients</p>
+      </div>
+      <div class="item">
+        <input type="checkbox" />
+        <p>Drink 8 glasses of water</p>
+      </div>
+    </div>
+
+    <script>
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let lastChecked;
+
+      function handleCheck(event) {
+        let inBetween = false;
+        if (event.shiftKey && this.checked) {
+          checkboxes.forEach((checkbox) => {
+            if (checkbox === this || checkbox === lastChecked) {
+              inBetween = !inBetween;
+            }
+
+            if (inBetween) {
+              checkbox.checked = true;
+            }
+          });
+        }
+
+        lastChecked = this;
+      }
+
+      checkboxes.forEach((checkbox) =>
+        checkbox.addEventListener("click", handleCheck)
+      );
+
+      const checkAll = document.getElementById("checkAll");
+      const uncheckAll = document.getElementById("uncheckAll");
+
+      checkAll.addEventListener("click", () => {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = true;
+        });
+      });
+
+      uncheckAll.addEventListener("click", () => {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+      });
+    </script>
+  </body>
+</html>
